@@ -6,16 +6,18 @@ import { useFormState } from "react-dom";
 
 export const Form = () => {
 	const initialState = { message: null, errors: {} };
-    const [state, dispatch] = useFormState(create, initialState)
+	const [state, dispatch] = useFormState(create, initialState);
 	return (
 		<form action={dispatch}>
-			<input
-				id='title'
-				name='title'
-				required
-				placeholder='Enter a board title'
-				className='border border-black p-1'
-			/>
+			<div className='flex flex-col space-y-2'>
+				<input
+					id='title'
+					name='title'
+					required
+					placeholder='Enter a board title'
+					className='border border-black p-1'
+				/>
+			</div>
 			<Button type='submit'>SUBMIT</Button>
 		</form>
 	);

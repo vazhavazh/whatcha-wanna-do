@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export type State = {
 	errors?: {
@@ -31,11 +32,18 @@ export async function create(prevState: State, formData: FormData) {
 
 	const { title } = validatedFields.data;
 
-	await db.board.create({
-		data: {
-			title,
-		},
-	});
+	try {
+		await db.board.create({
+			data: {
+				title,
+			},
+		});
+	} catch (error) {
+		return {
+			message: "Database error",
+		};
+	}
 
-	revalidatePath("organization/org_2Zaf92DBa8Cr8wyc4iBod1rUJ7e");
+	revalidatePath("/organization/org_2Zaf92DBa8Cr8wyc4iBod1rUJ7e");
+	redirect("/organization/org_2Zaf92DBa8Cr8wyc4iBod1rUJ7e");
 }
