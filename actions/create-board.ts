@@ -6,10 +6,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export type State = {
+	message?: string | null;
 	errors?: {
 		title?: string[];
 	};
-	message?: string | null;
 };
 
 const CreateBoard = z.object({
@@ -18,7 +18,7 @@ const CreateBoard = z.object({
 	}),
 });
 
-export async function create(prevState: State, formData: FormData) {
+export async function create(state: State, formData: FormData): Promise<State> {
 	const validatedFields = CreateBoard.safeParse({
 		title: formData.get("title"),
 	});

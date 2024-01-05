@@ -17,6 +17,17 @@ export const Form = () => {
 					placeholder='Enter a board title'
 					className='border border-black p-1'
 				/>
+				{state?.errors?.title ? (
+					<div>
+						{state.errors.title.map((error: string) => (
+							<p
+								key={error}
+								className='text-rose-500'>
+								{error}
+							</p>
+						))}
+					</div>
+				) : null}
 			</div>
 			<Button type='submit'>SUBMIT</Button>
 		</form>
