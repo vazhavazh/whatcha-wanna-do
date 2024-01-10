@@ -1,8 +1,13 @@
 "use server";
 
 import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./types";
+import { revalidatePath } from "next/cache";
+
 import { db } from "@/lib/db";
+
+import { UpdatedBoard } from "./schema";
+import { createSafeAction } from "@/lib/create-safe-action";
+import { InputType, ReturnType } from "./types";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
 	const { userId, orgId } = auth();
@@ -27,5 +32,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 				title,
 			},
 		});
-	} catch (error) {}
+	} catch (error) {
+		return {
+			error: "Failed to update",
+		};
+	}
+	revalidatePath(`board/${id}`);
+	return { data: board };
 };
+
+export const updateBoard = createSafeAction(UpdatedBoard, handler);
