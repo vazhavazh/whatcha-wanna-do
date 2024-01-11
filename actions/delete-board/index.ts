@@ -2,10 +2,12 @@
 
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
 
 import { db } from "@/lib/db";
 
-import { UpdatedBoard } from "./schema";
+import { DeleteBoard } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { InputType, ReturnType } from "./types";
 
@@ -18,27 +20,24 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		};
 	}
 
-	const { title, id } = data;
+	const { id } = data;
 
 	let board;
 
 	try {
-		board = await db.board.update({
+		board = await db.board.delete({
 			where: {
 				id,
 				orgId,
 			},
-			data: {
-				title,
-			},
 		});
 	} catch (error) {
 		return {
-			error: "Failed to update",
+			error: "Failed to delete",
 		};
 	}
-	revalidatePath(`/board/${id}`);
-	return { data: board };
+	revalidatePath(`/organization/${orgId}`);
+	redirect(`/organization/${orgId}`);
 };
 
-export const updateBoard = createSafeAction(UpdatedBoard, handler);
+export const deleteBoard = createSafeAction(DeleteBoard, handler);
