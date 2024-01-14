@@ -10,6 +10,8 @@ interface BoardIdPageProps {
 }
 
 const BoardIdPage = async ({ params }: BoardIdPageProps) => {
+	
+
 	const { orgId } = auth();
 
 	if (!orgId) {
@@ -32,7 +34,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
 		},
 
 		orderBy: {
-			Order: "asc",
+			order: "asc",
 		},
 	});
 	return (
