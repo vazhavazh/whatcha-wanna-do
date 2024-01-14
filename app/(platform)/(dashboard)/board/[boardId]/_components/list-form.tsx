@@ -2,12 +2,16 @@
 
 import { useRef, useState, ElementRef } from "react";
 
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { ListWrapper } from "./list-wrapper";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { FormInput } from "@/components/form/form-input";
+import { useParams } from "next/navigation";
+import { FormSubmit } from "@/components/form/form-submit";
+import { Button } from "@/components/ui/button";
 
 export const ListForm = () => {
+	const params = useParams();
 	const formRef = useRef<ElementRef<"form">>(null);
 	const inputRef = useRef<ElementRef<"input">>(null);
 
@@ -48,6 +52,20 @@ export const ListForm = () => {
                         transition'
 						placeholder='Enter list title...'
 					/>
+					<input
+						hidden
+						value={params.boardId}
+						name='boardId'
+					/>
+					<div className='flex items-center gap-x-1'>
+						<FormSubmit>Add list</FormSubmit>
+						<Button
+							onClick={disableEditing}
+							size='sm'
+							variant='ghost'>
+							<X className='h-5 w-5' />
+						</Button>
+					</div>
 				</form>
 			</ListWrapper>
 		);
