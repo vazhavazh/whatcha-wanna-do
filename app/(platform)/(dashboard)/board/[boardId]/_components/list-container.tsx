@@ -44,7 +44,7 @@ export const ListContainer = ({ data, boardId }: ListContainerProps) => {
 			return;
 		}
 
-		// ** User move a list
+		// ** User moves a list
 
 		if (type === "list") {
 			const items = reorder(orderedData, source.index, destination.index);
