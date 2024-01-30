@@ -81,12 +81,14 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
 					ref={formRef}
 					action={handleSubmit}>
 					<input
+						readOnly
 						hidden
 						id='id'
 						name='id'
 						value={data.id}
 					/>
 					<input
+						readOnly
 						hidden
 						id='boardId'
 						name='boardId'
@@ -118,7 +120,6 @@ export const ListHeader = ({ data, onAddCard }: ListHeaderProps) => {
 				data={data}
 				onAddCard={onAddCard}
 			/>
-		
 		</div>
 	);
 };

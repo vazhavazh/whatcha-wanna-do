@@ -79,6 +79,7 @@ export const ListForm = () => {
 					/>
 					<input
 						hidden
+						readOnly
 						value={params.boardId}
 						name='boardId'
 					/>
