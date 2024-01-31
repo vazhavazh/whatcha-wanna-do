@@ -11,6 +11,7 @@ import { Hint } from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
 import { getAvailableCount } from "@/lib/org-limit";
+import { checkSubscription } from "@/lib/subscription";
 
 export const BoardList = async () => {
 	const { orgId } = auth();
@@ -29,6 +30,8 @@ export const BoardList = async () => {
 	});
 
 	const availableCount = await getAvailableCount();
+	const isPro = await checkSubscription();
+
 	return (
 		<div className='space-y-4'>
 			<div
@@ -58,9 +61,11 @@ export const BoardList = async () => {
 	                bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center
 	                hover:opacity-75 transition'>
 						<p className='text-sm'>Create new board</p>
-						<span className='text-xs'>{`${
-							MAX_FREE_BOARDS - availableCount
-						} remaining`}</span>
+						<span className='text-xs'>
+							{isPro
+								? "Unlimited"
+								: `${MAX_FREE_BOARDS - availableCount} remaining`}
+						</span>
 						<Hint
 							sideOffset={40}
 							description={`
