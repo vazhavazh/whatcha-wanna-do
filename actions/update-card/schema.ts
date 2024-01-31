@@ -12,7 +12,8 @@ export const UpdatedCard = z.object({
 				message: "Description is to short",
 			})
 	),
-	title: z
+	title: z.optional(
+		z
 		.string({
 			required_error: "Title is required",
 			invalid_type_error: "Title is required",
@@ -20,5 +21,6 @@ export const UpdatedCard = z.object({
 		.min(3, {
 			message: "Title is too short",
 		}),
+	),
 	id: z.string(),
 });
